@@ -16,7 +16,7 @@ Vue.js part (https://github.com/Sobolev5/starlette-vue-frontend):
   - SB admin 2 on board 
 
 
-# starlette backend part
+# starlette-vue backend part
 
 Make virtualenv, clone this project, modify .env.example and rename it.
 
