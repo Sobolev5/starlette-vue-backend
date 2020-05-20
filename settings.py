@@ -1,3 +1,5 @@
+import os
+
 from starlette.config import Config
 from starlette.datastructures import CommaSeparatedStrings
 from starlette.datastructures import Secret
@@ -9,3 +11,4 @@ SECRET_KEY = config("SECRET_KEY", cast=Secret)
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=CommaSeparatedStrings)
 JWT_PREFIX = config("JWT_PREFIX", cast=str)
 JWT_ALGORITHM = config("JWT_ALGORITHM", cast=str)
+PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))

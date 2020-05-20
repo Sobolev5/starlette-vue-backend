@@ -6,12 +6,15 @@ from starlette.exceptions import HTTPException
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 from starlette.status import HTTP_400_BAD_REQUEST
+from starlette.templating import Jinja2Templates
 
 from settings import DEBUG
 
+templates = Jinja2Templates(directory="templates")
+
 
 async def main(request: Request) -> JSONResponse:
-    return JSONResponse({"Welcome to starlette-vue": "1"})
+    return templates.TemplateResponse("index.html", {"request": request})
 
 
 async def hello(request: Request) -> JSONResponse:

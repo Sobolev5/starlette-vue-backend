@@ -20,9 +20,7 @@ from settings import SECRET_KEY
 
 middleware = [
     Middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"]),
-    Middleware(
-        AuthenticationMiddleware, backend=JWTAuthenticationBackend(secret_key=str(SECRET_KEY), algorithm=JWT_ALGORITHM, prefix=JWT_PREFIX)
-    ),  # str(SECRET_KEY) is important
+    Middleware(AuthenticationMiddleware, backend=JWTAuthenticationBackend(secret_key=str(SECRET_KEY), algorithm=JWT_ALGORITHM, prefix=JWT_PREFIX)),  # str(SECRET_KEY) is important
     Middleware(SessionMiddleware, secret_key=SECRET_KEY),
     Middleware(GZipMiddleware, minimum_size=1000),
     Middleware(CustomHeaderMiddleware),

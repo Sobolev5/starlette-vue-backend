@@ -1,2 +1,2 @@
-# SET HERE PATH TO YOUR VENV
-source /c/my/svue_backend_env/Scripts/activate && python -m pytest -v tests
+ENV_ACTIVATE=$(grep ENV_ACTIVATE .env | cut -d '=' -f2)
+source $ENV_ACTIVATE && python -m pytest -v tests
