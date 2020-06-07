@@ -16,5 +16,4 @@ routes = [
     Route("/chat1/", endpoint=ChatTest1, name="main__chat1"),
     Route("/chat2/", endpoint=ChatTest2, name="main__chat2"),
     WebSocketRoute("/chat_ws", Chat),
-    WebSocketRoute("/default", Echo),
 ]

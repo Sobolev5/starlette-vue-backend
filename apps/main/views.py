@@ -60,7 +60,7 @@ html1 = """
         <ul id='messages'>
         </ul>
         <script>
-            var ws = new WebSocket("ws://back-dev.starlette-vue.site/chat_ws");
+            var ws = new WebSocket("ws://backend.starlette-vue.site/chat_ws");
             ws.onmessage = function(event) {
                 console.log('Message recivied %s', event.data)
                 var messages = document.getElementById('messages');
@@ -112,7 +112,7 @@ html2 = """
         <ul id='messages'>
         </ul>
         <script>
-            var ws = new WebSocket("ws://back-dev.starlette-vue.site/chat_ws");
+            var ws = new WebSocket("ws://backend.starlette-vue.site/chat_ws");
             ws.onmessage = function(event) {
                 console.log('Message recivied %s', event.data)
                 var messages = document.getElementById('messages');
