@@ -7,6 +7,7 @@ from starlette.middleware.sessions import SessionMiddleware
 from starlette.routing import Mount
 from tortoise.contrib.starlette import register_tortoise
 
+from apps.chat.urls import routes as chat_routes
 from apps.main.urls import routes as main_routes
 from apps.user.urls import routes as user_routes
 from middleware import CustomHeaderMiddleware
@@ -28,6 +29,7 @@ middleware = [
 
 
 routes = [
+    Mount("/chat", routes=chat_routes),
     Mount("/user", routes=user_routes),
     Mount("/", routes=main_routes),
 ]
