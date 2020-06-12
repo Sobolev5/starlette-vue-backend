@@ -24,7 +24,7 @@ html1 = """
         <script>
             var ws = new WebSocket("ws://backend.starlette-vue.site/chat/chat_ws");
             ws.onmessage = function(event) {
-                console.log('Message recivied %s', event.data)
+                console.log('Message received %s', event.data)
                 var messages = document.getElementById('messages');
                 var message = document.createElement('li');
                 var data = JSON.parse(event.data);
@@ -76,7 +76,7 @@ html2 = """
         <script>
             var ws = new WebSocket("ws://backend.starlette-vue.site/chat/chat_ws");
             ws.onmessage = function(event) {
-                console.log('Message recivied %s', event.data)
+                console.log('Message received %s', event.data)
                 var messages = document.getElementById('messages');
                 var message = document.createElement('li');
                 var data = JSON.parse(event.data);
