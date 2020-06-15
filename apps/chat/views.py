@@ -1,6 +1,5 @@
+from channel_box import channel_groups
 from channel_box import ChannelEndpoint
-from channel_box import group_send
-from channel_box import groups_show
 from starlette.endpoints import HTTPEndpoint
 from starlette.responses import HTMLResponse
 
@@ -14,7 +13,7 @@ html1 = """
     <body>
         <h1>WebsocketChannelEndpoint</h1>
         <form action="" onsubmit="sendMessage(event)">
-            <label>group_id: </label><input type="text" id="groupId" autocomplete="off" value="1"><br/>
+            <label>group_id: </label><input type="text" id="groupId" autocomplete="off" value="group_1"><br/>
             <label>username: </label><input type="text" id="username" autocomplete="off" value="test_user1"><br/>       
             <label>message: </label><input type="text" id="messageText" autocomplete="off" value="test_message1"><br/>
             <button>Send</button>
@@ -52,8 +51,8 @@ html1 = """
 
 class ChatTest1(HTTPEndpoint):
     async def get(self, request):
-        groups_show()
-        await group_send("group_1", {"username": "send from ChatTest1", "message": "ChatTest1"})
+        channel_groups.groups_show()
+        await channel_groups.group_send("group_1", {"username": "ChatTest1 Endpoint", "message": "Notify send from ChatTest1"})
         return HTMLResponse(html1)
 
 
@@ -66,7 +65,7 @@ html2 = """
     <body>
         <h1>WebsocketChannelEndpoint</h1>
         <form action="" onsubmit="sendMessage(event)">
-            <label>group_id: </label><input type="text" id="groupId" autocomplete="off" value="2"><br/>
+            <label>group_id: </label><input type="text" id="groupId" autocomplete="off" value="group_2"><br/>
             <label>username: </label><input type="text" id="username" autocomplete="off" value="test_user2"><br/>       
             <label>message: </label><input type="text" id="messageText" autocomplete="off" value="test_message2"><br/>
             <button>Send</button>
@@ -104,8 +103,8 @@ html2 = """
 
 class ChatTest2(HTTPEndpoint):
     async def get(self, request):
-        groups_show()
-        await group_send("group_2", {"username": "send from ChatTest2", "message": "ChatTest2"})
+        channel_groups.groups_show()
+        await channel_groups.group_send("group_2", {"username": "ChatTest2 Endpoint", "message": "Notify send from ChatTest2"})
         return HTMLResponse(html2)
 
 
@@ -122,8 +121,8 @@ class Chat(ChannelEndpoint):
         username = data["username"]
 
         if message.strip():
-            group = f"group_{group_id}"
-            await self.get_or_create(group)
+
+            self.get_or_create(group_id)
             payload = {
                 "username": username,
                 "message": message,

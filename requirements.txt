@@ -87,4 +87,4 @@ virtualenv==20.0.18
 wcwidth==0.1.9
 websockets==8.1
 yesqa==1.1.0
-channel-box==0.1.4
+channel-box==0.2
