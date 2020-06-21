@@ -1,18 +1,10 @@
 import os
-import sys
 
 path = os.path.dirname(os.path.abspath(__file__))
 path = path.replace("/apps/mailer", "")
-sys.path.insert(0, path)
 
-# help with template rendering
 import jinja2
 from mailjet_rest import Client
-
-# import of my secret keys for mailjet
-from dotenv import load_dotenv, find_dotenv
-
-load_dotenv(find_dotenv())
 
 from settings import MAILJET_API_KEY
 from settings import MAILJET_API_SECRET
@@ -64,7 +56,6 @@ class Mailer:
 
         """
 
-        # use jinja2 library and default template (you can change to other html template)
         templateLoader = jinja2.FileSystemLoader(searchpath=f"{path}/templates/mailer")
         templateEnv = jinja2.Environment(loader=templateLoader)
         TEMPLATE_FILE = "mail_template.html"
@@ -101,13 +92,3 @@ class Mailer:
             ]
         }
         result = mailjet.send.create(data=data)
-
-        print(result.status_code)
-        print(result.json())
-
-
-# __________________________________________________________________________________________________
-# The code below is just for TEST - delete in production
-
-mailer_message_1 = Mailer(sender="evgeniy.markulchak@gmail.com", recipient_list=("drunk_knight@mail.ru"), subject="Welcome to Monitor Project!", letter_body="You are welcome Crazy_Oleg_93! <b>This is bold text for html testing.</b>",)
-mailer_message_1.send_email()
