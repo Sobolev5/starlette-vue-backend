@@ -1,5 +1,7 @@
 import os
 
+from simple_print.functions import sprint
+
 path = os.path.dirname(os.path.abspath(__file__))
 path = path.replace("/apps/mailer", "")
 
@@ -46,6 +48,7 @@ class Mailer:
 
         self._template_render()
 
+        result = None
         if self.mail_service == "mailjet":
             self._send_mailjet()
 
@@ -67,7 +70,7 @@ class Mailer:
         """
         Sending messages using the Mailjet service.
         """
-
+        sprint(MAILJET_API_KEY)
         api_key = MAILJET_API_KEY
         api_secret = MAILJET_API_SECRET
         mailjet = Client(auth=(api_key, api_secret), version="v3.1")
