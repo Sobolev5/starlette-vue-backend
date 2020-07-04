@@ -10,10 +10,12 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse
 from starlette.status import HTTP_400_BAD_REQUEST
 
+from ..mailer.mailer import Mailer
 from .models import User
 from settings import JWT_ALGORITHM
 from settings import JWT_PREFIX
 from settings import SECRET_KEY
+from settings import USE_MAILER
 
 
 async def create_token(token_config: dict) -> str:
@@ -57,6 +59,12 @@ async def user_register(request: Request) -> JSONResponse:
     new_user.password = password
     await new_user.save()
 
+    if USE_MAILER == True:
+        mailer_message = Mailer(sender="Project@gmail.com", recipient_list=(f"{email}"), subject="You are registered on the Project!", letter_body=f"You are welcome {username}! You are now registered.",)
+        mailer_message.send_email()
+    else:
+        pass
+
     token = await create_token({"email": email, "username": username, "user_id": new_user.id, "get_expired_token": 1, "expiration_minutes": 30})
     refresh_token = await create_token({"email": email, "username": username, "user_id": new_user.id, "get_refresh_token": 1, "expiration_minutes": 10080})
 
@@ -78,6 +86,14 @@ async def user_login(request: Request) -> JSONResponse:
         if pbkdf2_sha256.verify(password, user.password):
             user.last_login_date = datetime.now()
             await user.save()
+
+            if USE_MAILER == True:
+                mailer_message = Mailer(
+                    sender="evgeniy.markulchak@gmail.com", recipient_list=(f"{user.email}"), subject="You are logged to Project!", letter_body=f"You are welcome {user.username}! Today at {datetime.now()} you entered the site.",
+                )
+                mailer_message.send_email()
+            else:
+                pass
 
             token = await create_token({"email": user.email, "username": user.username, "user_id": user.id, "get_expired_token": 1, "expiration_minutes": 30})
             refresh_token = await create_token({"email": user.email, "username": user.username, "user_id": user.id, "get_refresh_token": 1, "expiration_minutes": 10080})
