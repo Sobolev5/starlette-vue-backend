@@ -9,13 +9,17 @@ from starlette.exceptions import HTTPException
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 from starlette.status import HTTP_400_BAD_REQUEST
+from user_agents import parse
 
 from ..mailer.mailer import Mailer
 from .models import User
 from settings import JWT_ALGORITHM
 from settings import JWT_PREFIX
+from settings import PROJECT_MAIL
 from settings import SECRET_KEY
 from settings import USE_MAILER
+
+# A library to identify devices (phones, tablets) and parse it
 
 
 async def create_token(token_config: dict) -> str:
@@ -60,7 +64,12 @@ async def user_register(request: Request) -> JSONResponse:
     await new_user.save()
 
     if USE_MAILER == True:
-        mailer_message = Mailer(sender="Project@gmail.com", recipient_list=(f"{email}"), subject="You are registered on the Project!", letter_body=f"You are welcome {username}! You are now registered.",)
+        mailer_message = Mailer(
+            sender=PROJECT_MAIL,
+            recipient_list=(f"{email}"),
+            subject="You are registered on the Project!",
+            letter_body=f"You are welcome {username}! You are now registered. <br> Your login: {email} <br> Thank you for registering on our site.",
+        )
         mailer_message.send_email()
     else:
         pass
@@ -72,6 +81,15 @@ async def user_register(request: Request) -> JSONResponse:
 
 
 async def user_login(request: Request) -> JSONResponse:
+
+    # Parsing of user-agent characteristic string
+    try:
+        ua_string = request.headers.get("User-Agent", "<unknown>")
+    except:
+        ua_string = None
+    if ua_string:
+        user_agent = parse(ua_string)
+        user_agent = str(user_agent)
 
     try:
         payload = await request.json()
@@ -89,7 +107,7 @@ async def user_login(request: Request) -> JSONResponse:
 
             if USE_MAILER == True:
                 mailer_message = Mailer(
-                    sender="evgeniy.markulchak@gmail.com", recipient_list=(f"{user.email}"), subject="You are logged to Project!", letter_body=f"You are welcome {user.username}! Today at {datetime.now()} you entered the site.",
+                    sender=PROJECT_MAIL, recipient_list=(f"{user.email}"), subject="You are logged to the Project!", letter_body=f"You are welcome {user.username}! Today at {datetime.now()} you entered the site from: <br> {user_agent}.",
                 )
                 mailer_message.send_email()
             else:
