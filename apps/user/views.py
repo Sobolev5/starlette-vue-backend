@@ -19,8 +19,6 @@ from settings import PROJECT_MAIL
 from settings import SECRET_KEY
 from settings import USE_MAILER
 
-# A library to identify devices (phones, tablets) and parse it
-
 
 async def create_token(token_config: dict) -> str:
 
