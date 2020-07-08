@@ -14,7 +14,7 @@ JWT_ALGORITHM = config("JWT_ALGORITHM", cast=str)
 PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
 
 # Mailer settings
-MAILJET_API_KEY = config("MAILJET_API_KEY", cast=str)
-MAILJET_API_SECRET = config("MAILJET_API_SECRET", cast=str)
+MAILJET_API_KEY = config("MAILJET_API_KEY", cast=str, default="")
+MAILJET_API_SECRET = config("MAILJET_API_SECRET", cast=str, default="")
 USE_MAILER = config("USE_MAILER", cast=bool, default=False)
-PROJECT_MAIL = config("PROJECT_MAIL", cast=str)
+PROJECT_MAIL = config("PROJECT_MAIL", cast=str, default="")
