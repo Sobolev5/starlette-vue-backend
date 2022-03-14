@@ -2,7 +2,6 @@
 
 Starlette-Vue is a simple example that allows you to quickly get started 
 with the Starlette framework "the same as Django structure" with Vue.js frontend.
-See working example at https://svue-frontend.andrey-sobolev.ru/
 
 Starlette part (https://github.com/Sobolev5/starlette-vue-backend):
   - JWT authentication middleware with token refresh view
