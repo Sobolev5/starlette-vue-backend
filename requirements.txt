@@ -92,7 +92,7 @@ typing-extensions==3.7.4.2
 ua-parser==0.10.0
 urllib3==1.25.9
 user-agents==2.1
-uvicorn==0.11.3
+uvicorn==0.11.7
 uvloop==0.14.0
 virtualenv==20.0.18
 wcwidth==0.1.9
